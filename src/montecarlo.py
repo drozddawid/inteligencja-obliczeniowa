@@ -8,7 +8,7 @@ def monte_carlo_pi_graf2(points=2500):
     X1, Y1 = [], []
     circle_points = 0
     for i in range(points):
-        x, y = r(-100, 100, 1) / 100, r(-100, 100, 1) / 100
+        x, y = r(-100, 100) / 100, r(-100, 100) / 100
         if x ** 2 + y ** 2 <= 1:
             circle_points += 1
             X.append(x)

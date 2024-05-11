@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pygal
+from sklearn_extra.cluster import KMedoids
 from sklearn.cluster import KMeans
 from sklearn.metrics import confusion_matrix
 
@@ -43,7 +44,7 @@ def showTwoAttributesPlot(data, yAttribute='sepalLengthCm', xAttribute='sepalWid
 def showElbowMethodPlot(data_to_cluster):
     intertias = []
     for i in range(1, 11):
-        km = KMeans(n_clusters=i)
+        km = KMedoids(n_clusters=i)
         km.fit(data_to_cluster)
         # inertia - suma kwadratów odległości od każdego punktu do przypisanego mu centroidu
         intertias.append(km.inertia_)
@@ -64,10 +65,10 @@ if __name__ == '__main__':
     clustering_data = data.iloc[:, [0, 1, 2, 3]]
     showElbowMethodPlot(clustering_data)
 
-    k_means = KMeans(n_clusters=3, init='k-means++').fit(clustering_data)
+    k_means = KMedoids(n_clusters=3, init='k-medoids++').fit(clustering_data)
     data_with_centroids = data.copy()
     for cc in k_means.cluster_centers_:
-        row = pd.DataFrame([{"sepalLengthCm": cc[0], "sepalWidthCm": cc[1], "petalLengthCm": cc[2], "petalWidthCm": cc[3], 'class': "centroids"}])
+        row = pd.DataFrame([{"sepalLengthCm": cc[0], "sepalWidthCm": cc[1], "petalLengthCm": cc[2], "petalWidthCm": cc[3], 'class': "medoids"}])
         data_with_centroids = pd.concat([data_with_centroids, row], ignore_index=True)
 
     sns.set_style("whitegrid")
@@ -79,7 +80,7 @@ if __name__ == '__main__':
     data['prediction'] = k_means.predict(clustering_data)
 
     for cc in k_means.cluster_centers_:
-        row = pd.DataFrame([{"sepalLengthCm": cc[0], "sepalWidthCm": cc[1], "petalLengthCm": cc[2], "petalWidthCm": cc[3], 'class': "centroids"}])
+        row = pd.DataFrame([{"sepalLengthCm": cc[0], "sepalWidthCm": cc[1], "petalLengthCm": cc[2], "petalWidthCm": cc[3], 'class': "medoids"}])
         data_with_prediction = pd.concat([data_with_prediction, row], ignore_index=True)
 
     sns.set_style("whitegrid")
