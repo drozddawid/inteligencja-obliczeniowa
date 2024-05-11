@@ -76,9 +76,8 @@ if __name__ == '__main__':
 
     print("Accuracy:", accuray)
     print("F1 Score:", f1)
-    # show a plot displaying all classes and predictions
 
-
+    # Show confusion matrix
     labels = ["Iris-setosa", "Iris-versicolor", "Iris-virginica"]
     cm = confusion_matrix(y_test, y_pred, labels=labels)
     disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=labels)
