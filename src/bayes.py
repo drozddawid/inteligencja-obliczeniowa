@@ -10,7 +10,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import GaussianNB
 
 
-def showTwoAttributesPlot(data, yAttribute='sepalLengthCm',
+def show_two_attributes_plot(data, yAttribute='sepalLengthCm',
     xAttribute='sepalWidthCm'):
     # Extract columns for plotting
     yAttributeArray = data[yAttribute]
@@ -49,7 +49,7 @@ if __name__ == '__main__':
 
     attributeNames = ["sepalLengthCm", "sepalWidthCm", "petalLengthCm",
                       "petalWidthCm"]
-    showTwoAttributesPlot(data, attributeNames[0], attributeNames[2])
+    show_two_attributes_plot(data, attributeNames[0], attributeNames[2])
 
     # Split cluestering data to X and Y
     X = data.iloc[:, :-1].values
