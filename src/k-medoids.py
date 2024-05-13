@@ -65,21 +65,22 @@ if __name__ == '__main__':
     clustering_data = data.iloc[:, [0, 1, 2, 3]]
     showElbowMethodPlot(clustering_data)
 
-    k_means = KMedoids(n_clusters=3, init='k-medoids++').fit(clustering_data)
-    data_with_centroids = data.copy()
-    for cc in k_means.cluster_centers_:
+    k_medoids = KMedoids(n_clusters=3, init='k-medoids++', random_state=12).fit(clustering_data)
+    data_with_medoids = data.copy()
+    for cc in k_medoids.cluster_centers_:
         row = pd.DataFrame([{"sepalLengthCm": cc[0], "sepalWidthCm": cc[1], "petalLengthCm": cc[2], "petalWidthCm": cc[3], 'class': "medoids"}])
-        data_with_centroids = pd.concat([data_with_centroids, row], ignore_index=True)
+        data_with_medoids = pd.concat([data_with_medoids, row], ignore_index=True)
 
     sns.set_style("whitegrid")
-    sns.pairplot(data_with_centroids, hue="class", height=3)
+    sns.pairplot(data_with_medoids, hue="class", height=3)
     plt.show()
 
     data_with_prediction = data.copy()
-    data_with_prediction['class'] = k_means.predict(clustering_data)
-    data['prediction'] = k_means.predict(clustering_data)
+    prediction = k_medoids.predict(clustering_data)
+    data_with_prediction['class'] = prediction
+    data['prediction'] = prediction
 
-    for cc in k_means.cluster_centers_:
+    for cc in k_medoids.cluster_centers_:
         row = pd.DataFrame([{"sepalLengthCm": cc[0], "sepalWidthCm": cc[1], "petalLengthCm": cc[2], "petalWidthCm": cc[3], 'class': "medoids"}])
         data_with_prediction = pd.concat([data_with_prediction, row], ignore_index=True)
 
@@ -88,9 +89,9 @@ if __name__ == '__main__':
     plt.show()
 
     class_to_specie = {
-        0: 'Iris-setosa',
-        1: 'Iris-virginica',
-        2: 'Iris-versicolor'
+        1: 'Iris-setosa',
+        2: 'Iris-virginica',
+        0: 'Iris-versicolor'
     }
 
     actual = data['class'].values

@@ -59,12 +59,12 @@ if __name__ == '__main__':
     data = pd.read_csv('iris/iris.csv')
 
     attributeNames = ["sepalLengthCm", "sepalWidthCm", "petalLengthCm", "petalWidthCm"]
-    showTwoAttributesPlot(data, attributeNames[0], attributeNames[2])
+    # showTwoAttributesPlot(data, attributeNames[0], attributeNames[2])
 
     clustering_data = data.iloc[:, [0, 1, 2, 3]]
     showElbowMethodPlot(clustering_data)
 
-    k_means = KMeans(n_clusters=3, init='k-means++').fit(clustering_data)
+    k_means = KMeans(n_clusters=3, init='k-means++', random_state=12).fit(clustering_data)
     data_with_centroids = data.copy()
     for cc in k_means.cluster_centers_:
         row = pd.DataFrame([{"sepalLengthCm": cc[0], "sepalWidthCm": cc[1], "petalLengthCm": cc[2], "petalWidthCm": cc[3], 'class': "centroids"}])
@@ -75,8 +75,9 @@ if __name__ == '__main__':
     plt.show()
 
     data_with_prediction = data.copy()
-    data_with_prediction['class'] = k_means.predict(clustering_data)
-    data['prediction'] = k_means.predict(clustering_data)
+    prediction = k_means.predict(clustering_data)
+    data_with_prediction['class'] = prediction
+    data['prediction'] = prediction
 
     for cc in k_means.cluster_centers_:
         row = pd.DataFrame([{"sepalLengthCm": cc[0], "sepalWidthCm": cc[1], "petalLengthCm": cc[2], "petalWidthCm": cc[3], 'class': "centroids"}])
