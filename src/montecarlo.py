@@ -3,7 +3,7 @@ from random import randrange as r
 import matplotlib.pyplot as plt
 
 
-def monte_carlo_pi_graf2(points=2500):
+def monte_carlo_pi_graf2(points=5000):
     X, Y = [], []
     X1, Y1 = [], []
     circle_points = 0
@@ -18,8 +18,8 @@ def monte_carlo_pi_graf2(points=2500):
             Y1.append(y)
 
     print(f'Generated Pi ({points} points):', 4 * circle_points / points)
-    plt.scatter(X, Y, color='red')
-    plt.scatter(X1, Y1, color='blue')
+    plt.scatter(X, Y, color='green')
+    plt.scatter(X1, Y1, color='red')
     plt.show()
 
 
